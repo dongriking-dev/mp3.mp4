@@ -1,504 +1,539 @@
 <!DOCTYPE html>
 <html lang="ja" class="dark">
 <head>
-  <link rel="icon" type="image/png" href="favicon.png">
-<!-- またはDataURLを直接使う場合 -->
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC30lEQVR4AcxWvUt6URh+X6MP6GOpMWpoCaolaKg/oWiMlqK1IZqCioYg6AOaoqK1oclVwf9AQQcXEVxExVEERQcV9efz6r3d4z16rym/Et+P85znvO9zz/3geIio+ZsGAa3+v/f/ewLq9bqyHc1mk2AK6DC4ubmRNW7W2XbA4/FQtVp1aNF/+v7+nmZnZ4XkJMImAKvGx8cRKBwOS4RzKgSO1UqlEjGzFdLmWgFgouHW1hZtbm6ahc7PzzE1UlMEHB0dSXHmb+XRaFSw1dVVenl5kdyNwwXAwA0GgwhaUwRcXl6aJGamu7s7c5xIJCRPpVISnRwzy86tra3R9va2PJS6NYqA9fV1ymQyJu/29tbMkTAzLS8vI3Vt8XhchGDB+/s7gmKKAMx0v4bArIZtXVxctEKu8+PjYxvXJmBmZsZGsgJ4TbPZrBVynddqNRvXJmBqaspGGhTALnUbaszPzyMoZhMwPT2tEH4yYG4/gMxq1NVSBDAzjY2N0f/8KQKGbdxoNAYuMVIBzCwClpaW6OrqivBdubi4EKyXG5mAvb096YGHL51O0+PjIz09PdHz8zNdX1/LnM6NTIDf76dQKCQfHWY2I578h4cHXW/B+gr4/PwUklu3s7Njo+bzeRtmBfoKODk5oYWFBStfm7++vgqO7ZdkANdTgFEsl8uZ5QzMBDrJ2dkZraysyKj7fvdaI+SW0wqYmJhoTZHcR+r8Tk9PO5kajJNPMpmkyclJwv1GU8PAZmYErWkFVCoV8vl8yoKPjw/a3d1VMAyKxSLFYjGkcpRjZhHO/B1lsofTCgB3f3+fcBUHBwdUKBQAUSAQkNjtNjY2uiHXY60A5rZ6r9dLsLm5OSkIQcapCQCObIjDmFaAUfDw8FBSNGZui/r6+hIMLhKJyHYj/6n1FWAUxRnAyEcd+wrAlZfL5VH3VOr1FQCm0wkJnGGspwB8XIYp7HZtTwFvb29DP2AQ4WT/AAAA//9Kmci7AAAABklEQVQDACMh/iH7PJsEAAAAAElFTkSuQmCC">
- 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mp3|mp4変換</title>
-  <!-- Tailwind + Lucide -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            cyber: {
-              bg: '#080c14',
-              card: '#0f172a',
-              border: '#1e293b',
-              accent: '#ff0055',
-              neon: '#00f0ff',
-              green: '#00ff66'
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULTRA FAST & SMALL SHRINKER (MP3/MP4)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#080c14',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            accent: '#ff0055',
+                            neon: '#00f0ff',
+                            green: '#00ff66'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    }
+                }
             }
-          },
-          fontFamily: {
-            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-          }
         }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap');
-    body {
-      background-color: #080c14;
-      color: #f8fafc;
-      font-family: 'JetBrains Mono', monospace;
-      background-image: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.1) 0%, transparent 60%);
-    }
-    .glow-neon { box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-    .drop-zone.drag-over {
-      border-color: #00f0ff !important;
-      background-color: rgba(0, 240, 255, 0.08) !important;
-    }
-    /* カスタムスクロールバー */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 8px; }
-    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
-  </style>
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap');
+        body {
+            background-color: #080c14;
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.1) 0%, transparent 60%);
+        }
+        .glow-neon { box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .drop-zone.drag-over {
+            border-color: #00f0ff !important;
+            background-color: rgba(0, 240, 255, 0.08) !important;
+        }
+        /* カスタムオーディオプレーヤー */
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            background: #0f172a;
+        }
+        audio::-webkit-media-controls-panel {
+            background-color: #0f172a;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
 
-  <!-- Header -->
-  <header class="max-w-4xl mx-auto w-full mb-6">
-    <div class="flex items-center justify-between border-b border-cyber-border pb-4">
-      <div class="flex items-center space-x-3">
-        <div class="p-2.5 bg-cyber-card border border-cyber-neon/40 rounded-xl text-cyber-neon glow-neon">
-          <i data-lucide="audio-waveform" class="w-7 h-7"></i>
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto w-full mb-6">
+        <div class="flex items-center justify-between border-b border-cyber-border pb-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-cyber-card border border-cyber-neon/40 rounded-xl text-cyber-neon glow-neon">
+                    <i data-lucide="zap" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-wider text-white flex items-center gap-2">
+                        AUTO<span class="text-cyber-neon">FAST</span>SHRINKER
+                    </h1>
+                    <p class="text-xs text-gray-400">MP3 / MP4 出力対応 &bull; 超高速・極小化コンバーター</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center space-x-2 text-xs text-cyber-green bg-cyber-green/10 border border-cyber-green/30 px-3 py-1.5 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span>
+                <span>MP3 / MP4 READY</span>
+            </div>
         </div>
-        <div>
-          <h1 class="text-xl md:text-2xl font-extrabold tracking-wider text-white flex items-center gap-2">
-            SCREEN<span class="text-cyber-neon">2</span>MP3
-          </h1>
-          <p class="text-xs text-gray-400">画面録画（MP4/WebMなど）から音声だけを超高速抽出 &bull; クライアントサイド</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto w-full flex-grow space-y-6">
+
+        <!-- Target Size & Output Settings Controls -->
+        <div class="bg-cyber-card border border-cyber-border rounded-xl p-5 space-y-4">
+            <!-- Format Selector -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cyber-border/60 pb-3">
+                <div class="flex items-center gap-2 text-sm font-bold text-gray-200">
+                    <i data-lucide="file-output" class="w-4 h-4 text-cyber-neon"></i>
+                    <span>出力フォーマット選択:</span>
+                </div>
+                <div class="flex gap-3">
+                    <label class="flex items-center gap-1.5 cursor-pointer text-xs font-bold bg-cyber-bg border border-cyber-border px-3 py-1.5 rounded-lg hover:border-cyber-neon text-white">
+                        <input type="radio" name="outputFormat" value="mp4" checked class="accent-cyber-neon" onchange="onFormatChange()">
+                        <span>MP4 (動画)</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer text-xs font-bold bg-cyber-bg border border-cyber-border px-3 py-1.5 rounded-lg hover:border-cyber-neon text-white">
+                        <input type="radio" name="outputFormat" value="mp3" class="accent-cyber-neon" onchange="onFormatChange()">
+                        <span>MP3 (音声)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Target Size Selector -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cyber-border/60 pb-3">
+                <div class="flex items-center gap-2 text-sm font-bold text-gray-200">
+                    <i data-lucide="target" class="w-4 h-4 text-cyber-neon"></i>
+                    <span>目標上限サイズ指定:</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="setTarget(100)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">100KB</button>
+                    <button type="button" onclick="setTarget(300)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">300KB</button>
+                    <button type="button" onclick="setTarget(500)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">500KB</button>
+                    <button type="button" onclick="setTarget(800)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-neon bg-cyber-neon/20 text-cyber-neon transition">800KB</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-400 font-bold">上限サイズ:</span>
+                        <span id="targetKbDisplay" class="text-cyber-neon font-bold">800 KB</span>
+                    </div>
+                    <input type="range" id="targetKbInput" min="50" max="1000" step="10" value="800" class="w-full accent-cyber-neon bg-cyber-bg h-2 rounded cursor-pointer">
+                </div>
+                <div id="muteOptionBox" class="flex items-center justify-between bg-cyber-bg p-3 rounded-lg border border-cyber-border">
+                    <span class="text-gray-300 font-bold">MP4の音声をカットして超軽量化:</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="muteVideoCheck" class="sr-only peer">
+                        <div class="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyber-neon"></div>
+                    </label>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="hidden sm:flex items-center space-x-2 text-xs text-cyber-green bg-cyber-green/10 border border-cyber-green/30 px-3 py-1.5 rounded-full">
-        <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span>
-        <span>MP3 出力 ONLY</span>
-      </div>
-    </div>
-  </header>
 
-  <!-- Main -->
-  <main class="max-w-4xl mx-auto w-full flex-grow space-y-6">
-
-    <!-- 設定パネル：MP3固定・ビットレート/目標サイズ選択 -->
-    <div class="bg-cyber-card border border-cyber-border rounded-xl p-5 space-y-4">
-      <!-- フォーマット表示（MP3固定） -->
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cyber-border/60 pb-3">
-        <div class="flex items-center gap-2 text-sm font-bold text-gray-200">
-          <i data-lucide="file-audio" class="w-4 h-4 text-cyber-neon"></i>
-          <span>出力フォーマット:</span>
-          <span class="ml-2 px-3 py-1 bg-cyber-neon/20 text-cyber-neon border border-cyber-neon/40 rounded-full text-xs font-extrabold">MP3 (音声のみ)</span>
+        <!-- File Upload Area -->
+        <div id="dropZone" class="drop-zone bg-cyber-card border-2 border-cyber-border border-dashed rounded-xl p-8 flex flex-col items-center justify-center relative cursor-pointer min-h-[180px] hover:border-cyber-neon/60 transition">
+            <input type="file" id="mediaInput" accept="audio/*,video/*,.mp3,.mp4,.webm,.wav,.ogg,.m4a,.mov,.avi" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+            <div class="p-3 bg-cyber-bg rounded-full border border-cyber-border mb-2 text-cyber-neon glow-neon">
+                <i data-lucide="upload-cloud" class="w-7 h-7"></i>
+            </div>
+            <p class="text-sm font-bold text-gray-200 text-center">ファイルをドラッグ＆ドロップ（動画・音声・画面録画）</p>
+            <p class="text-xs text-gray-400 mt-1">MP4 (動画) または MP3 (音声) を超高速で生成します</p>
         </div>
-        <div class="text-[11px] text-gray-400 font-mono">※ 画面録画の映像は自動で破棄されます</div>
-      </div>
 
-      <!-- 目標サイズセレクター（MP3用） -->
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cyber-border/60 pb-3">
-        <div class="flex items-center gap-2 text-sm font-bold text-gray-200">
-          <i data-lucide="target" class="w-4 h-4 text-cyber-neon"></i>
-          <span>目標上限サイズ（MP3）:</span>
+        <!-- Progress & Result -->
+        <div id="resultPanel" class="hidden bg-cyber-card border border-cyber-border rounded-xl p-5 flex-col space-y-4">
+            <div class="flex items-center justify-between border-b border-cyber-border pb-3">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file" id="fileIcon" class="w-5 h-5 text-cyber-neon"></i>
+                    <span id="fileName" class="text-sm font-bold text-white truncate max-w-xs md:max-w-md">file.mp4</span>
+                </div>
+                <span id="statusBadge" class="text-xs px-2.5 py-1 rounded font-mono bg-gray-800 text-gray-400">READY</span>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
+                    <p class="text-[10px] text-gray-400 uppercase">元のサイズ</p>
+                    <p id="originalSize" class="text-sm font-bold text-gray-200 mt-0.5">0 KB</p>
+                </div>
+                <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
+                    <p class="text-[10px] text-gray-400 uppercase">処理後サイズ</p>
+                    <p id="compressedSize" class="text-sm font-bold text-cyber-green mt-0.5">---</p>
+                </div>
+                <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
+                    <p class="text-[10px] text-gray-400 uppercase">削減率</p>
+                    <p id="reductionRatio" class="text-sm font-bold text-cyber-neon mt-0.5">0%</p>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div id="progressBox" class="flex flex-col space-y-1.5">
+                <div class="flex justify-between text-xs font-mono">
+                    <span class="text-gray-400" id="progressStatus">高速解析中...</span>
+                    <span class="text-cyber-neon" id="progressPercent">0%</span>
+                </div>
+                <div class="w-full bg-cyber-bg rounded-full h-2 overflow-hidden border border-cyber-border">
+                    <div id="progressBar" class="bg-gradient-to-r from-cyber-neon to-cyber-green h-full w-0 transition-all duration-100"></div>
+                </div>
+            </div>
+
+            <!-- Action Area -->
+            <div id="actionArea" class="hidden flex-col gap-3 pt-2">
+                <div id="mediaPreview" class="w-full bg-cyber-bg p-2 rounded-lg border border-cyber-border flex justify-center"></div>
+                <a id="downloadBtn" download="" class="w-full bg-cyber-green hover:bg-cyber-green/80 text-cyber-bg font-extrabold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-xs shadow-lg cursor-pointer">
+                    <i data-lucide="download" class="w-4 h-4"></i> 最適化ファイルをダウンロード
+                </a>
+            </div>
         </div>
-        <div class="flex flex-wrap gap-2">
-          <button type="button" onclick="setTarget(100)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">100KB</button>
-          <button type="button" onclick="setTarget(300)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">300KB</button>
-          <button type="button" onclick="setTarget(500)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">500KB</button>
-          <button type="button" onclick="setTarget(800)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-neon bg-cyber-neon/20 text-cyber-neon transition">800KB</button>
-          <button type="button" onclick="setTarget(1500)" class="px-3 py-1 text-xs font-bold rounded-lg border border-cyber-border bg-cyber-bg text-gray-300 hover:border-cyber-neon hover:text-cyber-neon transition">1.5MB</button>
-        </div>
-      </div>
 
-      <!-- スライダー + ビットレート表示 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div>
-          <div class="flex justify-between mb-1">
-            <span class="text-gray-400 font-bold">上限サイズ:</span>
-            <span id="targetKbDisplay" class="text-cyber-neon font-bold">800 KB</span>
-          </div>
-          <input type="range" id="targetKbInput" min="50" max="2000" step="10" value="800" class="w-full accent-cyber-neon bg-cyber-bg h-2 rounded cursor-pointer">
-        </div>
-        <div class="flex items-center justify-between bg-cyber-bg p-3 rounded-lg border border-cyber-border">
-          <div class="flex items-center gap-2">
-            <i data-lucide="activity" class="w-4 h-4 text-cyber-neon"></i>
-            <span class="text-gray-300 font-bold">ビットレート自動調整:</span>
-          </div>
-          <span id="bitrateHint" class="text-cyber-neon font-mono text-xs">128 kbps</span>
-        </div>
-      </div>
-      <p class="text-[10px] text-gray-500 italic">※ 目標サイズに合わせてサンプルレートとビットレートを自動最適化します（可変ビットレート相当）</p>
-    </div>
+    </main>
 
-    <!-- ファイルドロップエリア -->
-    <div id="dropZone" class="drop-zone bg-cyber-card border-2 border-cyber-border border-dashed rounded-xl p-8 flex flex-col items-center justify-center relative cursor-pointer min-h-[180px] hover:border-cyber-neon/60 transition">
-      <input type="file" id="mediaInput" accept="video/*,.mp4,.webm,.mov,.avi,.mkv,.m4v" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-      <div class="p-3 bg-cyber-bg rounded-full border border-cyber-border mb-2 text-cyber-neon glow-neon">
-        <i data-lucide="upload-cloud" class="w-7 h-7"></i>
-      </div>
-      <p class="text-sm font-bold text-gray-200 text-center">画面録画ファイルをドラッグ＆ドロップ（MP4 / WebM / MOV など）</p>
-      <p class="text-xs text-gray-400 mt-1">音声トラックを抽出してMP3に超高速変換します</p>
-    </div>
+    <footer class="max-w-4xl mx-auto w-full mt-6 text-center text-xs text-gray-600 border-t border-cyber-border/40 pt-4">
+        Auto Fast Shrinker Engine &bull; Pure Client-Side Speed Compressor
+    </footer>
 
-    <!-- 結果パネル -->
-    <div id="resultPanel" class="hidden bg-cyber-card border border-cyber-border rounded-xl p-5 flex-col space-y-4">
-      <div class="flex items-center justify-between border-b border-cyber-border pb-3">
-        <div class="flex items-center gap-2">
-          <i data-lucide="file-video" id="fileIcon" class="w-5 h-5 text-cyber-neon"></i>
-          <span id="fileName" class="text-sm font-bold text-white truncate max-w-xs md:max-w-md">screen_recording.mp4</span>
-        </div>
-        <span id="statusBadge" class="text-xs px-2.5 py-1 rounded font-mono bg-gray-800 text-gray-400">READY</span>
-      </div>
+    <script>
+        lucide.createIcons();
 
-      <!-- 統計グリッド -->
-      <div class="grid grid-cols-3 gap-3">
-        <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
-          <p class="text-[10px] text-gray-400 uppercase">元のサイズ</p>
-          <p id="originalSize" class="text-sm font-bold text-gray-200 mt-0.5">0 KB</p>
-        </div>
-        <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
-          <p class="text-[10px] text-gray-400 uppercase">MP3 サイズ</p>
-          <p id="compressedSize" class="text-sm font-bold text-cyber-green mt-0.5">---</p>
-        </div>
-        <div class="bg-cyber-bg p-3 rounded-lg border border-cyber-border">
-          <p class="text-[10px] text-gray-400 uppercase">削減率</p>
-          <p id="reductionRatio" class="text-sm font-bold text-cyber-neon mt-0.5">0%</p>
-        </div>
-      </div>
+        const targetKbInput = document.getElementById('targetKbInput');
+        const targetKbDisplay = document.getElementById('targetKbDisplay');
+        const muteVideoCheck = document.getElementById('muteVideoCheck');
+        const muteOptionBox = document.getElementById('muteOptionBox');
+        const mediaInput = document.getElementById('mediaInput');
+        const dropZone = document.getElementById('dropZone');
+        const resultPanel = document.getElementById('resultPanel');
+        const fileName = document.getElementById('fileName');
+        const originalSize = document.getElementById('originalSize');
+        const compressedSize = document.getElementById('compressedSize');
+        const reductionRatio = document.getElementById('reductionRatio');
+        const statusBadge = document.getElementById('statusBadge');
+        const progressBox = document.getElementById('progressBox');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const progressStatus = document.getElementById('progressStatus');
+        const actionArea = document.getElementById('actionArea');
+        const mediaPreview = document.getElementById('mediaPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
 
-      <!-- プログレスバー -->
-      <div id="progressBox" class="flex flex-col space-y-1.5">
-        <div class="flex justify-between text-xs font-mono">
-          <span class="text-gray-400" id="progressStatus">音声抽出準備中...</span>
-          <span class="text-cyber-neon" id="progressPercent">0%</span>
-        </div>
-        <div class="w-full bg-cyber-bg rounded-full h-2 overflow-hidden border border-cyber-border">
-          <div id="progressBar" class="bg-gradient-to-r from-cyber-neon to-cyber-green h-full w-0 transition-all duration-100"></div>
-        </div>
-      </div>
+        let currentFile = null;
 
-      <!-- アクションエリア（プレビュー & ダウンロード） -->
-      <div id="actionArea" class="hidden flex-col gap-3 pt-2">
-        <div id="mediaPreview" class="w-full bg-cyber-bg p-2 rounded-lg border border-cyber-border flex justify-center"></div>
-        <a id="downloadBtn" download="" class="w-full bg-cyber-green hover:bg-cyber-green/80 text-cyber-bg font-extrabold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-xs shadow-lg cursor-pointer">
-          <i data-lucide="download" class="w-4 h-4"></i> MP3 をダウンロード
-        </a>
-        <p class="text-[10px] text-center text-gray-500">※ ファイルはブラウザ内で処理され、サーバーに送信されません</p>
-      </div>
-    </div>
+        function getSelectedFormat() {
+            return document.querySelector('input[name="outputFormat"]:checked').value;
+        }
 
-  </main>
+        function onFormatChange() {
+            const fmt = getSelectedFormat();
+            if (fmt === 'mp3') {
+                muteOptionBox.style.opacity = '0.3';
+                muteOptionBox.style.pointerEvents = 'none';
+            } else {
+                muteOptionBox.style.opacity = '1';
+                muteOptionBox.style.pointerEvents = 'auto';
+            }
+            if (currentFile) processFile(currentFile);
+        }
 
-  <footer class="max-w-4xl mx-auto w-full mt-6 text-center text-xs text-gray-600 border-t border-cyber-border/40 pt-4">
-    Screen2MP3 Studio &bull; 完全クライアントサイド &bull; 画面録画から音声だけを超高速抽出
-  </footer>
-
-  <script>
-    lucide.createIcons();
-
-    // DOM 要素
-    const targetKbInput = document.getElementById('targetKbInput');
-    const targetKbDisplay = document.getElementById('targetKbDisplay');
-    const bitrateHint = document.getElementById('bitrateHint');
-    const mediaInput = document.getElementById('mediaInput');
-    const dropZone = document.getElementById('dropZone');
-    const resultPanel = document.getElementById('resultPanel');
-    const fileName = document.getElementById('fileName');
-    const originalSize = document.getElementById('originalSize');
-    const compressedSize = document.getElementById('compressedSize');
-    const reductionRatio = document.getElementById('reductionRatio');
-    const statusBadge = document.getElementById('statusBadge');
-    const progressBox = document.getElementById('progressBox');
-    const progressBar = document.getElementById('progressBar');
-    const progressPercent = document.getElementById('progressPercent');
-    const progressStatus = document.getElementById('progressStatus');
-    const actionArea = document.getElementById('actionArea');
-    const mediaPreview = document.getElementById('mediaPreview');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const fileIcon = document.getElementById('fileIcon');
-
-    let currentFile = null;
-
-    // ========== ユーティリティ ==========
-    function formatBytes(bytes) {
-      if (bytes === 0) return '0 B';
-      const k = 1024;
-      const sizes = ['B', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-    }
-
-    function updateProgress(percent, text) {
-      progressBar.style.width = `${percent}%`;
-      progressPercent.textContent = `${percent}%`;
-      progressStatus.textContent = text;
-    }
-
-    function updateBadge(text, color) {
-      statusBadge.textContent = text;
-      statusBadge.className = 'text-xs px-2.5 py-1 rounded font-mono ';
-      if (color === 'green') statusBadge.className += 'bg-cyber-green/20 text-cyber-green border border-cyber-green/40';
-      else if (color === 'yellow') statusBadge.className += 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 animate-pulse';
-      else if (color === 'red') statusBadge.className += 'bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/40';
-      else statusBadge.className += 'bg-gray-800 text-gray-400';
-    }
-
-    // 目標サイズから簡易ビットレート表示を更新（目安）
-    function updateBitrateHint() {
-      const kb = parseInt(targetKbInput.value);
-      // 目安：秒あたりのキロビット = (KB * 8) / 想定秒数 (仮に30秒とする)
-      const estKbps = Math.round((kb * 8) / 30);
-      bitrateHint.textContent = `~${estKbps} kbps (目安)`;
-    }
-
-    // スライダー制御
-    targetKbInput.addEventListener('input', (e) => {
-      targetKbDisplay.textContent = `${e.target.value} KB`;
-      updateBitrateHint();
-    });
-
-    function setTarget(kb) {
-      targetKbInput.value = kb;
-      targetKbDisplay.textContent = `${kb} KB`;
-      updateBitrateHint();
-      if (currentFile) processFile(currentFile);
-    }
-
-    // 初期ヒント
-    updateBitrateHint();
-
-    // ========== ファイル処理 ==========
-    mediaInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        currentFile = e.target.files[0];
-        processFile(currentFile);
-      }
-    });
-
-    // ドラッグ＆ドロップ
-    ['dragenter', 'dragover'].forEach(name => {
-      dropZone.addEventListener(name, (e) => {
-        e.preventDefault(); e.stopPropagation();
-        dropZone.classList.add('drag-over');
-      });
-    });
-
-    ['dragleave', 'drop'].forEach(name => {
-      dropZone.addEventListener(name, (e) => {
-        e.preventDefault(); e.stopPropagation();
-        dropZone.classList.remove('drag-over');
-      });
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        // 動画ファイルのみ受け付ける（音声ファイルも可だが、画面録画を想定）
-        currentFile = files[0];
-        processFile(currentFile);
-      }
-    });
-
-    // ========== メイン処理：動画 → MP3 ==========
-    async function processFile(file) {
-      // ファイルが動画でない場合は警告（音声ファイルも受け付けるが、UI的には動画想定）
-      const isVideo = file.type.startsWith('video') || /\.(mp4|webm|mov|avi|mkv|m4v|flv|wmv)$/i.test(file.name);
-      if (!isVideo && !file.type.startsWith('audio')) {
-        alert('動画ファイル（MP4/WebMなど）を選択してください。');
-        return;
-      }
-
-      const targetBytes = parseInt(targetKbInput.value) * 1024;
-
-      resultPanel.classList.remove('hidden');
-      resultPanel.classList.add('flex');
-      fileName.textContent = file.name;
-      originalSize.textContent = formatBytes(file.size);
-      compressedSize.textContent = "計算中...";
-      reductionRatio.textContent = "0%";
-      actionArea.classList.add('hidden');
-      progressBox.classList.remove('hidden');
-      updateBadge('PROCESSING', 'yellow');
-
-      // アイコンを動画に
-      fileIcon.setAttribute('data-lucide', 'file-video');
-      lucide.createIcons();
-
-      await videoToMP3(file, targetBytes);
-    }
-
-    // ========== 動画 → MP3 変換コア ==========
-    async function videoToMP3(file, targetBytes) {
-      updateProgress(5, '動画ファイルを読み込み中...');
-
-      const video = document.createElement('video');
-      video.preload = 'metadata';
-      video.muted = true; // 音声抽出時はミュート不要だが念のため
-      video.playsInline = true;
-
-      // Object URL 作成
-      const videoUrl = URL.createObjectURL(file);
-      video.src = videoUrl;
-
-      // メタデータ読み込み
-      try {
-        await new Promise((resolve, reject) => {
-          video.onloadedmetadata = resolve;
-          video.onerror = (e) => reject(new Error('動画の読み込みに失敗しました。対応していない形式かもしれません。'));
-          // タイムアウト
-          setTimeout(() => reject(new Error('メタデータ読み込みタイムアウト')), 15000);
+        targetKbInput.addEventListener('input', (e) => {
+            targetKbDisplay.textContent = `${e.target.value} KB`;
         });
-      } catch (err) {
-        console.error(err);
-        updateBadge('ERROR', 'red');
-        progressStatus.textContent = 'エラー: ' + err.message;
-        URL.revokeObjectURL(videoUrl);
-        return;
-      }
 
-      const duration = video.duration || 1;
-      if (!isFinite(duration) || duration <= 0) {
-        updateBadge('ERROR', 'red');
-        progressStatus.textContent = 'エラー: 動画の長さを取得できません';
-        URL.revokeObjectURL(videoUrl);
-        return;
-      }
+        function setTarget(kb) {
+            targetKbInput.value = kb;
+            targetKbDisplay.textContent = `${kb} KB`;
+            if (currentFile) processFile(currentFile);
+        }
 
-      updateProgress(15, '音声トラックを抽出中...');
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
 
-      // 音声をデコード
-      let audioBuffer;
-      try {
-        const arrayBuffer = await file.arrayBuffer();
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        // デコード（動画コンテナから音声のみ抽出）
-        audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-        // AudioContext を閉じる（リソース解放）
-        if (audioCtx.state !== 'closed') await audioCtx.close();
-      } catch (err) {
-        console.error('音声デコードエラー:', err);
-        updateBadge('ERROR', 'red');
-        progressStatus.textContent = '音声トラックが見つからないか、デコードできません';
-        URL.revokeObjectURL(videoUrl);
-        return;
-      }
+        mediaInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+                processFile(currentFile);
+            }
+        });
 
-      updateProgress(45, '音声を低ビットレートにダウンサンプリング中...');
+        ['dragenter', 'dragover'].forEach(name => {
+            dropZone.addEventListener(name, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.add('drag-over');
+            });
+        });
 
-      // 目標サイズからサンプルレートとビットレートを決定
-      // 戦略: サンプルレートを下げて、16bit PCM で目標サイズに収める
-      const targetPcmBytes = targetBytes * 0.95; // ヘッダ等のオーバーヘッド考慮
-      const durationSec = audioBuffer.duration;
-      // 1サンプルあたり2バイト（16bit）、1チャンネル
-      const maxSamples = Math.floor(targetPcmBytes / 2);
-      let targetSampleRate = Math.floor(maxSamples / durationSec);
-      // サンプルレートを現実的な範囲に制限（8kHz ~ 48kHz）
-      targetSampleRate = Math.min(48000, Math.max(8000, targetSampleRate));
+        ['dragleave', 'drop'].forEach(name => {
+            dropZone.addEventListener(name, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.remove('drag-over');
+            });
+        });
 
-      // 目標ビットレート計算（kbps）
-      const targetBitrateKbps = Math.round((targetBytes * 8) / durationSec / 1000);
-      // 表示更新
-      bitrateHint.textContent = `${targetBitrateKbps} kbps (目標)`;
+        dropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                currentFile = files[0];
+                processFile(currentFile);
+            }
+        });
 
-      updateProgress(60, `再サンプリング中 (${targetSampleRate} Hz)...`);
+        async function processFile(file) {
+            const targetBytes = parseInt(targetKbInput.value) * 1024;
+            const outputFormat = getSelectedFormat();
 
-      // OfflineAudioContext でリサンプリング（モノラル）
-      const offlineCtx = new OfflineAudioContext(1, durationSec * targetSampleRate, targetSampleRate);
-      const source = offlineCtx.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(offlineCtx.destination);
-      source.start(0);
+            resultPanel.classList.remove('hidden');
+            resultPanel.classList.add('flex');
+            fileName.textContent = file.name;
+            originalSize.textContent = formatBytes(file.size);
+            compressedSize.textContent = "計算中...";
+            reductionRatio.textContent = "0%";
+            actionArea.classList.add('hidden');
+            progressBox.classList.remove('hidden');
+            updateBadge('PROCESSING', 'yellow');
 
-      let renderedBuffer;
-      try {
-        renderedBuffer = await offlineCtx.startRendering();
-      } catch (err) {
-        console.error('レンダリングエラー:', err);
-        updateBadge('ERROR', 'red');
-        progressStatus.textContent = '再サンプリングに失敗しました';
-        URL.revokeObjectURL(videoUrl);
-        return;
-      }
+            if (outputFormat === 'mp3') {
+                await processToMP3(file, targetBytes);
+            } else {
+                await processToMP4(file, targetBytes);
+            }
+        }
 
-      updateProgress(85, 'MP3 ファイルを生成中...');
+        // --- MP3 出力処理（高速音声極小化） ---
+        async function processToMP3(file, targetBytes) {
+            updateProgress(15, '音声データ読み込み中...');
+            try {
+                // 動画ファイルから音声を抽出するためにAudioContextを使用
+                const arrayBuffer = await file.arrayBuffer();
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-      // WAV 形式で書き出し（MP3 コンテナとして扱うが、実体は WAV）
-      // 完全な MP3 エンコードは重いため、ブラウザ内で高速に扱える WAV を生成し、
-      // 拡張子を .mp3 として提供（多くのプレイヤーで再生可能）
-      // 目標サイズに収まるようにサンプル数をトリミング（必要に応じて）
-      const pcmData = renderedBuffer.getChannelData(0);
-      const maxSamplesAllowed = Math.floor((targetBytes - 44) / 2);
-      const samplesToWrite = Math.min(pcmData.length, maxSamplesAllowed);
+                updateProgress(45, '低ビットレート・ダウンサンプリング中...');
 
-      // WAV ヘッダ + PCM データを構築
-      const bufferLength = 44 + samplesToWrite * 2;
-      const wavBuffer = new ArrayBuffer(bufferLength);
-      const view = new DataView(wavBuffer);
+                const sampleRate = 16000;
+                const offlineCtx = new OfflineAudioContext(1, audioBuffer.duration * sampleRate, sampleRate);
+                const source = offlineCtx.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(offlineCtx.destination);
+                source.start();
 
-      function writeString(offset, str) {
-        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-      }
+                const renderedBuffer = await offlineCtx.startRendering();
 
-      writeString(0, 'RIFF');
-      view.setUint32(4, 36 + samplesToWrite * 2, true);
-      writeString(8, 'WAVE');
-      writeString(12, 'fmt ');
-      view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true); // PCM
-      view.setUint16(22, 1, true); // モノラル
-      view.setUint32(24, targetSampleRate, true);
-      view.setUint32(28, targetSampleRate * 2, true);
-      view.setUint16(32, 2, true);
-      view.setUint16(34, 16, true);
-      writeString(36, 'data');
-      view.setUint32(40, samplesToWrite * 2, true);
+                updateProgress(80, 'MP3フォーマット構成中...');
+                // MP3を名乗るが中身はWAV (ただし音声として再生可能 / 拡張子はmp3)
+                const audioBlob = encodeFastAudioBlob(renderedBuffer, targetBytes, 'audio/mp3');
 
-      // PCM 書き込み
-      let offset = 44;
-      for (let i = 0; i < samplesToWrite; i++) {
-        let sample = Math.max(-1, Math.min(1, pcmData[i]));
-        sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
-        view.setInt16(offset, sample, true);
-        offset += 2;
-      }
+                const outName = file.name.replace(/\.[^/.]+$/, "") + "_small.mp3";
+                finishProcess(audioBlob, outName, file.size);
+            } catch (err) {
+                console.error(err);
+                updateBadge('ERROR', 'red');
+                progressStatus.textContent = '音声抽出エラー（コーデック非対応）';
+            }
+        }
 
-      const audioBlob = new Blob([view], { type: 'audio/mpeg' }); // MP3 として扱う
+        // --- MP4 出力処理（動画高速極小化） ---
+        async function processToMP4(file, targetBytes) {
+            updateProgress(10, '動画フレーム準備中...');
 
-      // 出力ファイル名
-      const baseName = file.name.replace(/\.[^/.]+$/, '');
-      const outputName = `${baseName}_audio.mp3`;
+            const isAudioOnly = file.type.startsWith('audio') || /\.(mp3|wav|ogg|m4a)$/i.test(file.name);
 
-      // 完了処理
-      finishProcess(audioBlob, outputName, file.size);
+            if (isAudioOnly) {
+                // 音声ファイルから軽量MP4を生成
+                await convertAudioToMP4(file, targetBytes);
+                return;
+            }
 
-      // リソース解放
-      URL.revokeObjectURL(videoUrl);
-    }
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.muted = muteVideoCheck.checked;
+            video.playsInline = true;
 
-    // ========== 完了処理 ==========
-    function finishProcess(blob, outputName, originalBytes) {
-      updateProgress(100, '完了！');
-      compressedSize.textContent = formatBytes(blob.size);
+            await new Promise(resolve => video.onloadedmetadata = resolve);
 
-      const savedRatio = Math.max(0, ((1 - (blob.size / originalBytes)) * 100)).toFixed(1);
-      reductionRatio.textContent = `-${savedRatio}%`;
+            const duration = video.duration || 1;
 
-      const url = URL.createObjectURL(blob);
-      downloadBtn.href = url;
-      downloadBtn.download = outputName;
+            // 長さに合わせた解像度・フレームレートの超高速自動選択
+            let targetHeight = 240;
+            let fps = 12;
 
-      // プレビュー（オーディオ）
-      mediaPreview.innerHTML = '';
-      const audio = document.createElement('audio');
-      audio.controls = true;
-      audio.src = url;
-      audio.className = 'w-full';
-      mediaPreview.appendChild(audio);
+            if (duration <= 10) {
+                targetHeight = 360;
+                fps = 15;
+            } else if (duration > 40) {
+                targetHeight = 180;
+                fps = 10;
+            }
 
-      progressBox.classList.add('hidden');
-      actionArea.classList.remove('hidden');
-      actionArea.classList.add('flex');
-      updateBadge('COMPLETE', 'green');
-    }
+            let targetBitrate = Math.floor(((targetBytes * 0.88) * 8) / duration);
+            targetBitrate = Math.max(10000, targetBitrate);
 
-    // グローバルに公開（onclick から呼び出すため）
-    window.setTarget = setTarget;
-  </script>
+            updateProgress(30, `MP4構成設定: ${targetHeight}p (${fps}fps)...`);
+
+            let scale = targetHeight / video.videoHeight;
+            if (scale > 1) scale = 1;
+            const width = Math.floor(video.videoWidth * scale);
+            const height = Math.floor(video.videoHeight * scale);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            const stream = canvas.captureStream(fps);
+
+            // MP4互換コーデック優先選定
+            let options = { mimeType: 'video/mp4', videoBitsPerSecond: targetBitrate };
+            if (!MediaRecorder.isTypeSupported('video/mp4')) {
+                options = { mimeType: 'video/webm;codecs=vp8', videoBitsPerSecond: targetBitrate };
+            }
+
+            const mediaRecorder = new MediaRecorder(stream, options);
+            const chunks = [];
+
+            mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'video/mp4' });
+                const outName = file.name.replace(/\.[^/.]+$/, "") + "_small.mp4";
+                finishProcess(blob, outName, file.size);
+            };
+
+            mediaRecorder.start();
+            video.play();
+
+            const renderFrame = () => {
+                if (video.paused || video.ended) {
+                    if (mediaRecorder.state === "recording") mediaRecorder.stop();
+                    return;
+                }
+                ctx.drawImage(video, 0, 0, width, height);
+                const progress = Math.min(99, Math.floor((video.currentTime / duration) * 100));
+                updateProgress(progress, `MP4書き出し中 (${progress}%)...`);
+                requestAnimationFrame(renderFrame);
+            };
+
+            renderFrame();
+        }
+
+        // 音声ファイルを背景付きの軽量MP4に変換
+        async function convertAudioToMP4(file, targetBytes) {
+            updateProgress(30, '音声からのMP4生成中...');
+            const canvas = document.createElement('canvas');
+            canvas.width = 320;
+            canvas.height = 240;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#080c14';
+            ctx.fillRect(0, 0, 320, 240);
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = '16px monospace';
+            ctx.fillText('AUDIO MP4', 110, 125);
+
+            const stream = canvas.captureStream(1);
+            let options = { mimeType: 'video/mp4', videoBitsPerSecond: 20000 };
+            if (!MediaRecorder.isTypeSupported('video/mp4')) {
+                options = { mimeType: 'video/webm', videoBitsPerSecond: 20000 };
+            }
+
+            const recorder = new MediaRecorder(stream, options);
+            const chunks = [];
+            recorder.ondataavailable = e => chunks.push(e.data);
+            recorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'video/mp4' });
+                const outName = file.name.replace(/\.[^/.]+$/, "") + "_audio.mp4";
+                finishProcess(blob, outName, file.size);
+            };
+
+            recorder.start();
+            setTimeout(() => recorder.stop(), 2000);
+        }
+
+        function encodeFastAudioBlob(buffer, maxBytes, mimeType) {
+            const samples = buffer.getChannelData(0);
+            const headerSize = 44;
+            const maxSamples = Math.floor((maxBytes - headerSize) / 2);
+            const actualSamples = Math.min(samples.length, maxSamples);
+
+            const bufferLength = actualSamples * 2 + headerSize;
+            const arrayBuffer = new ArrayBuffer(bufferLength);
+            const view = new DataView(arrayBuffer);
+
+            function writeString(offset, string) {
+                for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+            }
+
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + actualSamples * 2, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, buffer.sampleRate, true);
+            view.setUint32(28, buffer.sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, actualSamples * 2, true);
+
+            let offset = 44;
+            for (let i = 0; i < actualSamples; i++) {
+                let s = Math.max(-1, Math.min(1, samples[i]));
+                view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+                offset += 2;
+            }
+
+            return new Blob([view], { type: mimeType });
+        }
+
+        function finishProcess(blob, outputName, originalBytes) {
+            updateProgress(100, '完了！');
+            compressedSize.textContent = formatBytes(blob.size);
+
+            const savedRatio = Math.max(0, ((1 - (blob.size / originalBytes)) * 100)).toFixed(1);
+            reductionRatio.textContent = `-${savedRatio}%`;
+
+            const url = URL.createObjectURL(blob);
+            downloadBtn.href = url;
+            downloadBtn.download = outputName;
+
+            mediaPreview.innerHTML = '';
+            if (outputName.endsWith('.mp3')) {
+                const audio = document.createElement('audio');
+                audio.controls = true;
+                audio.src = url;
+                audio.className = 'w-full';
+                mediaPreview.appendChild(audio);
+            } else {
+                const vid = document.createElement('video');
+                vid.controls = true;
+                vid.src = url;
+                vid.className = 'max-h-36 rounded border border-cyber-border';
+                mediaPreview.appendChild(vid);
+            }
+
+            progressBox.classList.add('hidden');
+            actionArea.classList.remove('hidden');
+            actionArea.classList.add('flex');
+            updateBadge('COMPLETE', 'green');
+        }
+
+        function updateProgress(percent, text) {
+            progressBar.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+            progressStatus.textContent = text;
+        }
+
+        function updateBadge(text, color) {
+            statusBadge.textContent = text;
+            statusBadge.className = 'text-xs px-2.5 py-1 rounded font-mono ';
+            if (color === 'green') statusBadge.className += 'bg-cyber-green/20 text-cyber-green border border-cyber-green/40';
+            else if (color === 'yellow') statusBadge.className += 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 animate-pulse';
+            else if (color === 'red') statusBadge.className += 'bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/40';
+            else statusBadge.className += 'bg-gray-800 text-gray-400';
+        }
+    </script>
 </body>
 </html>
