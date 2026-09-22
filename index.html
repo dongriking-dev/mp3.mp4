@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <link rel="icon" type="image/png" href="favicon.png">
-<!-- またはDataURLを直接使う場合 -->
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC30lEQVR4AcxWvUt6URh+X6MP6GOpMWpoCaolaKg/oWiMlqK1IZqCioYg6AOaoqK1oclVwf9AQQcXEVxExVEERQcV9efz6r3d4z16rym/Et+P85znvO9zz/3geIio+ZsGAa3+v/f/ewLq9bqyHc1mk2AK6DC4ubmRNW7W2XbA4/FQtVp1aNF/+v7+nmZnZ4XkJMImAKvGx8cRKBwOS4RzKgSO1UqlEjGzFdLmWgFgouHW1hZtbm6ahc7PzzE1UlMEHB0dSXHmb+XRaFSw1dVVenl5kdyNwwXAwA0GgwhaUwRcXl6aJGamu7s7c5xIJCRPpVISnRwzy86tra3R9va2PJS6NYqA9fV1ymQyJu/29tbMkTAzLS8vI3Vt8XhchGDB+/s7gmKKAMx0v4bArIZtXVxctEKu8+PjYxvXJmBmZsZGsgJ4TbPZrBVynddqNRvXJmBqaspGGhTALnUbaszPzyMoZhMwPT2tEH4yYG4/gMxq1NVSBDAzjY2N0f/8KQKGbdxoNAYuMVIBzCwClpaW6OrqivBdubi4EKyXG5mAvb096YGHL51O0+PjIz09PdHz8zNdX1/LnM6NTIDf76dQKCQfHWY2I578h4cHXW/B+gr4/PwUklu3s7Njo+bzeRtmBfoKODk5oYWFBStfm7++vgqO7ZdkANdTgFEsl8uZ5QzMBDrJ2dkZraysyKj7fvdaI+SW0wqYmJhoTZHcR+r8Tk9PO5kajJNPMpmkyclJwv1GU8PAZmYErWkFVCoV8vl8yoKPjw/a3d1VMAyKxSLFYjGkcpRjZhHO/B1lsofTCgB3f3+fcBUHBwdUKBQAUSAQkNjtNjY2uiHXY60A5rZ6r9dLsLm5OSkIQcapCQCObIjDmFaAUfDw8FBSNGZui/r6+hIMLhKJyHYj/6n1FWAUxRnAyEcd+wrAlZfL5VH3VOr1FQCm0wkJnGGspwB8XIYp7HZtTwFvb29DP2AQ4WT/AAAA//9Kmci7AAAABklEQVQDACMh/iH7PJsEAAAAAElFTkSuQmCC">
- 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mp3/mp4変換</title>
+  <title>動画・音声 オールインワン編集＆最適化ツール</title>
   <!-- FFmpeg.wasm (v0.11.x Stable) -->
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
   <style>
@@ -74,7 +69,7 @@
       margin-bottom: 20px;
     }
 
-    video {
+    video, audio {
       width: 100%;
       max-height: 360px;
       background: #000;
@@ -225,19 +220,19 @@
 <body>
 
 <div class="container">
-  <h1>画面録画・動画/音声コンバーター（CapCut風調整付き）</h1>
+  <h1>メディア編集・トリミング＆軽量化コンバーター</h1>
 
   <!-- 1. ファイル選択 -->
   <div class="file-input-wrapper">
     <label class="custom-file-btn" for="fileInput" id="fileBtnLabel">
-      画面録画や動画・音声を選択 (MP4, MOV, WebM, MP3等)
+      動画 / 音声ファイルを選択 (MP4, MP3, MOV, WebM等)
     </label>
-    <input type="file" id="fileInput" accept="video/*,audio/*,.mov,.mp4,.webm,.m4a">
+    <input type="file" id="fileInput" accept="video/*,audio/*">
   </div>
 
   <!-- 2. プレビュー＆トリミング調整 -->
   <div class="preview-section" id="previewSection">
-    <video id="videoPreview" controls playsinline></video>
+    <video id="videoPreview" controls></video>
 
     <div class="controls-group">
       <div class="range-group">
@@ -258,43 +253,43 @@
     </div>
 
     <div class="info-bar">
-      <span>カット後の再生時間: <strong id="selectedDurationLabel">00:00.0</strong></span>
+      <span>選択された長さ: <strong id="selectedDurationLabel">00:00.0</strong></span>
       <button type="button" id="playCutBtn" style="background:#3a3a3c; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">
-        カット範囲をプレビュー
+        選択範囲を再生
       </button>
     </div>
 
     <!-- 3. 出力フォーマット＆サイズ自動最適化の設定 -->
     <div class="options-grid">
       <div class="option-item">
-        <label for="formatSelect">変換モード</label>
+        <label for="formatSelect">変換出力フォーマット</label>
         <select id="formatSelect">
-          <option value="mp3">MP3 (画面録画/動画から音声のみ抽出)</option>
-          <option value="mp4">MP4 (軽量動画化)</option>
+          <option value="mp4">MP4 (動画)</option>
+          <option value="mp3">MP3 (音声のみ抽出)</option>
         </select>
       </div>
 
       <div class="option-item">
-        <label for="targetSizeInput">目標の上限ファイルサイズ (KB)</label>
-        <input type="number" id="targetSizeInput" value="800" min="50" step="50">
+        <label for="targetSizeInput">目標上限ファイルサイズ (KB)</label>
+        <input type="number" id="targetSizeInput" value="800" min="100" step="50">
       </div>
     </div>
 
-    <button id="processBtn" class="btn">最適化して変換・カット実行</button>
+    <button id="processBtn" class="btn">最適化して変換処理を実行</button>
 
     <!-- プログレス表示 -->
     <div class="progress-container" id="progressContainer">
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progressBar"></div>
       </div>
-      <div class="status-text" id="statusText">エンジン初期化中...</div>
+      <div class="status-text" id="statusText">FFmpegを準備中...</div>
     </div>
 
-    <!-- 変換結果 -->
+    <!-- 結果ダウンロード -->
     <div class="result-section" id="resultSection">
       <h3>変換が完了しました！</h3>
       <p id="resultInfoText"></p>
-      <a id="downloadLink" class="download-btn" download>ファイルを保存</a>
+      <a id="downloadLink" class="download-btn" download>ファイルをダウンロード</a>
     </div>
   </div>
 </div>
@@ -328,12 +323,14 @@
   let startTime = 0;
   let endTime = 0;
 
+  // 秒数フォーマット (mm:ss.s)
   function formatTime(sec) {
     const mins = Math.floor(sec / 60);
     const secs = (sec % 60).toFixed(1);
     return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
   }
 
+  // ファイル選択時
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -345,6 +342,7 @@
     resultSection.style.display = 'none';
   });
 
+  // メタデータ読み込み完了時のシーク＆スライダー初期化
   videoPreview.addEventListener('loadedmetadata', () => {
     totalDuration = videoPreview.duration;
     
@@ -357,10 +355,12 @@
     updateUI();
   });
 
+  // トリミング調整UIの更新
   function updateUI() {
     startTime = parseFloat(startRange.value);
     endTime = parseFloat(endRange.value);
 
+    // 開始が終了を超えないよう調整
     if (startTime >= endTime) {
       startTime = Math.max(0, endTime - 0.1);
       startRange.value = startTime;
@@ -381,6 +381,7 @@
     videoPreview.currentTime = endTime;
   });
 
+  // 範囲プレビュー再生
   playCutBtn.addEventListener('click', () => {
     videoPreview.currentTime = startTime;
     videoPreview.play();
@@ -393,7 +394,7 @@
     }
   });
 
-  // 変換・カット・MP3抽出・軽量化実行
+  // 変換・カット・ファイルサイズ最適化の実行
   processBtn.addEventListener('click', async () => {
     if (!currentFile) return;
 
@@ -406,90 +407,94 @@
     const targetSizeKB = parseFloat(targetSizeInput.value) || 800;
     const targetFormat = formatSelect.value;
 
+    // UIを処理中状態にする
     processBtn.disabled = true;
     progressContainer.style.display = 'block';
     resultSection.style.display = 'none';
     progressBar.style.width = '0%';
-    statusText.textContent = 'FFmpegエンジン起動中...';
+    statusText.textContent = 'FFmpegエンジンを起動中...';
 
     try {
       if (!ffmpeg.isLoaded()) {
         await ffmpeg.load();
       }
 
+      // FFmpeg進捗イベント
       ffmpeg.setProgress(({ ratio }) => {
         const percent = Math.min(Math.round(ratio * 100), 100);
         if (!isNaN(percent)) {
           progressBar.style.width = percent + '%';
-          statusText.textContent = `変換中... ${percent}%`;
+          statusText.textContent = `処理中... ${percent}%`;
         }
       });
 
-      // 拡張子維持（画面録画の.movにも完全対応）
-      const fileExt = currentFile.name.split('.').pop().toLowerCase() || 'mp4';
-      const inputName = `input_${Date.now()}.${fileExt}`;
+      // 仮想ファイルシステムに書き込み
+      const inputName = `input_${Date.now()}.${currentFile.name.split('.').pop()}`;
       const outputName = `output_${Date.now()}.${targetFormat}`;
-
       ffmpeg.FS('writeFile', inputName, await fetchFile(currentFile));
 
-      // 800KB以下など目標サイズ達成のためのビットレート算出
+      // 最短サイズ達成のための目標ビットレート算出 (bps)
+      // Bitrate = (Target Size in Bits) / Duration
       const targetBits = targetSizeKB * 1024 * 8;
       const totalTargetBitrateKbps = Math.floor((targetBits / duration) / 1024);
 
       let ffmpegArgs = [];
 
-      // 高速カットのための時間指定
+      // 時間カット用オプション
       ffmpegArgs.push('-ss', startTime.toString());
       ffmpegArgs.push('-i', inputName);
       ffmpegArgs.push('-t', duration.toString());
 
       if (targetFormat === 'mp3') {
-        // 【画面録画のMP3変換修正ポイント】
-        // 映像トラックを除外(-vn)し、明示的にLAME MP3エンコーダ(-c:a libmp3lame)で変換
+        // MP3最適化：指定サイズに収めるための音声ビットレート制限
+        // 音声は最低32kbps程度必要
         const audioBitrate = Math.max(32, Math.min(320, totalTargetBitrateKbps));
-        ffmpegArgs.push('-vn'); 
-        ffmpegArgs.push('-c:a', 'libmp3lame');
         ffmpegArgs.push('-b:a', `${audioBitrate}k`);
-        ffmpegArgs.push('-ar', '44100'); // 標準的なサンプリング周波数に固定
       } else if (targetFormat === 'mp4') {
-        // 動画圧縮モード
+        // MP4最適化：映像＋音声のビットレート配分
+        // 音声を64kbpsに固定し、残りを映像へ割り振り
         const audioBitrate = 64;
         let videoBitrate = totalTargetBitrateKbps - audioBitrate;
-        if (videoBitrate < 40) videoBitrate = 40;
+
+        // 動画が壊れない最小ビットレート設定
+        if (videoBitrate < 50) videoBitrate = 50;
 
         ffmpegArgs.push('-c:v', 'libx264');
         ffmpegArgs.push('-b:v', `${videoBitrate}k`);
-        ffmpegArgs.push('-vf', 'scale=-2:min(480\\,ih)'); // 最短時間処理のため解像度自動調整
+        ffmpegArgs.push('-maxrate', `${videoBitrate * 1.2}k`);
+        ffmpegArgs.push('-bufsize', `${videoBitrate * 2}k`);
+        ffmpegArgs.push('-vf', 'scale=-2:min(480\\,ih)'); // 短時間＆小サイズ化のため最大480pに解像度調整
         ffmpegArgs.push('-c:a', 'aac');
         ffmpegArgs.push('-b:a', `${audioBitrate}k`);
-        ffmpegArgs.push('-preset', 'ultrafast');
+        ffmpegArgs.push('-preset', 'ultrafast'); // 最短時間処理
       }
 
       ffmpegArgs.push(outputName);
 
-      statusText.textContent = 'エンコード・サイズ調整中...';
+      statusText.textContent = '変換およびサイズ最適化エンコードを実行中...';
       await ffmpeg.run(...ffmpegArgs);
 
+      // 結果取り出し
       const data = ffmpeg.FS('readFile', outputName);
-      const mimeType = targetFormat === 'mp3' ? 'audio/mp3' : 'video/mp4';
-      const blob = new Blob([data.buffer], { type: mimeType });
+      const blob = new Blob([data.buffer], { type: targetFormat === 'mp3' ? 'audio/mp3' : 'video/mp4' });
       const actualSizeKB = (blob.size / 1024).toFixed(1);
 
       // クリーニング
       ffmpeg.FS('unlink', inputName);
       ffmpeg.FS('unlink', outputName);
 
+      // 完了UI更新
       const downloadUrl = URL.createObjectURL(blob);
       downloadLink.href = downloadUrl;
-      downloadLink.download = `output_${Date.now()}.${targetFormat}`;
+      downloadLink.download = `optimized_cut.${targetFormat}`;
       
       resultInfoText.textContent = `出力サイズ: ${actualSizeKB} KB / 再生時間: ${duration.toFixed(1)} 秒`;
       resultSection.style.display = 'block';
-      statusText.textContent = '処理が正常に終了しました！';
+      statusText.textContent = '完了しました！';
 
     } catch (err) {
       console.error(err);
-      alert('変換に失敗しました。ファイル形式または選択時間を確認してください。');
+      alert('処理中にエラーが発生しました。ファイルフォーマットまたはカット設定を確認してください。');
       statusText.textContent = 'エラーが発生しました。';
     } finally {
       processBtn.disabled = false;
